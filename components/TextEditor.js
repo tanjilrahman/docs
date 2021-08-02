@@ -6,7 +6,8 @@ import { db } from '../firebase';
 import { useRouter } from 'next/dist/client/router';
 import { convertFromRaw, convertToRaw } from 'draft-js';
 import { useSession } from 'next-auth/client';
-import { useDocumentOnce } from 'react-firebase-hooks/firestore';
+import { useDocument, useDocumentOnce } from 'react-firebase-hooks/firestore';
+import firebase from 'firebase';
 
 const Editor = dynamic(
   () => import('react-draft-wysiwyg').then((module) => module.Editor),
@@ -20,6 +21,28 @@ function TextEditor() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const router = useRouter();
   const { id } = router.query;
+  const [tCharacter, setTCharacter] = useState(Number);
+
+  const getCurrentTotalCharacter = (eS) => {
+    const raw = convertToRaw(eS.getCurrentContent());
+    let total = 0;
+
+    raw.blocks.map((block) => {
+      total = total + block.text.length;
+    });
+
+    return total;
+  };
+
+  const totalCharacter = (raw) => {
+    let total = 0;
+
+    raw?.blocks.map((block) => {
+      total = total + block.text.length;
+    });
+
+    return total;
+  };
 
   const [snapshot] = useDocumentOnce(
     db.collection('userDocs').doc(session.user.email).collection('docs').doc(id)
@@ -35,8 +58,45 @@ function TextEditor() {
     }
   }, [snapshot]);
 
+  const [totalSnapshot] = useDocument(
+    db.collection('userDocs').doc(session.user.email).collection('docs').doc(id)
+  );
+
+  useEffect(() => {
+    setTCharacter(totalCharacter(totalSnapshot?.data()?.editorState));
+  }, [totalSnapshot]);
+
   const onEditorStateChange = (editorState) => {
     setEditorState(editorState);
+
+    if (getCurrentTotalCharacter(editorState) !== tCharacter) {
+      db.collection('userDocs')
+        .doc(session.user.email)
+        .collection('docs')
+        .doc(id)
+        .set(
+          {
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            upToDate: false,
+          },
+          {
+            merge: true,
+          }
+        );
+    } else if (getCurrentTotalCharacter(editorState) === tCharacter) {
+      db.collection('userDocs')
+        .doc(session.user.email)
+        .collection('docs')
+        .doc(id)
+        .set(
+          {
+            upToDate: true,
+          },
+          {
+            merge: true,
+          }
+        );
+    }
 
     db.collection('userDocs')
       .doc(session.user.email)
@@ -57,7 +117,7 @@ function TextEditor() {
       <Editor
         editorState={editorState}
         onEditorStateChange={onEditorStateChange}
-        toolbarClassName='flex sticky top-0 z-50 !justify-center mx-auto'
+        toolbarClassName='flex sticky top-[71px] z-50 !justify-center mx-auto'
         editorClassName='mt-6 p-20 bg-white shadow-lg max-w-5xl mx-auto mb-12 border'
       />
     </div>
