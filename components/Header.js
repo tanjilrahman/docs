@@ -17,7 +17,7 @@ function Header() {
         <Icon name='menu' size='3xl' />
       </Button>
       <Icon name='description' size='5xl' color='blue' />
-      <h1 className='ml-2 flex-grow md:flex-grow-0 text-gray-700 text-2xl'>
+      <h1 className='ml-2 flex-grow md:flex-grow-0 text-gray-700 text-lg sm:text-2xl'>
         Docs
       </h1>
 
@@ -34,7 +34,7 @@ function Header() {
         color='lightBlue'
         buttonType='filled'
         size='ragular'
-        className='inline-flex h-9 md:h-10'
+        className='inline-flex h-8 md:h-10'
         rounded={false}
         block={false}
         iconOnly={false}

@@ -89,7 +89,7 @@ export default function Home() {
 
       {modal}
 
-      <section className='bg-[#F8F9FA] pb-10 px-10'>
+      <section className='bg-[#F8F9FA] pb-10 px-5 sm:px-10'>
         <div className='max-w-3xl mx-auto'>
           <div className='flex items-center justify-between py-6'>
             <h2 className='text-gray-700 text-lg'>Start a new document</h2>
@@ -119,11 +119,11 @@ export default function Home() {
         </div>
       </section>
 
-      <section className='bg-white px-10 md:px-0'>
+      <section className='bg-white px-5 md:px-0'>
         <div className='max-w-3xl mx-auto py-8 text-sm text-gray-700'>
           <div className='flex items-center justify-between pb-5'>
             <h2 className='font-medium flex-grow'>My Documents</h2>
-            <p className='mr-12'>Date Created</p>
+            <p className='mr-8 sm:mr-12'>Date Created</p>
             <Icon name='folder' size='3xl' color='gray' />
           </div>
           {snapshot?.docs.map((doc) => (

@@ -103,7 +103,7 @@ const DocumentRow = ({ id, filename, date }) => {
 
   return (
     <div
-      className='flex items-center p-4 rounded-lg hover:bg-gray-100 cursor-pointer text-gray-700 text-sm relative'
+      className='flex items-center p-3 sm:p-4 rounded-lg hover:bg-gray-100 cursor-pointer text-gray-700 text-sm relative'
       onMouseOver={() => setIsLeave(true)}
       onMouseLeave={() => {
         setIsLeave(false);
@@ -115,8 +115,10 @@ const DocumentRow = ({ id, filename, date }) => {
       <Link href={`/doc/${id}`}>
         <a className='flex items-center flex-grow'>
           <Icon name='article' size='3xl' color='blue' />
-          <p className='flex-grow pl-5 w-10 truncate'>{filename}</p>
-          <p className='pr-5 text-sm'>{date?.toDate().toLocaleDateString()}</p>
+          <p className='flex-grow pl-3 sm:pl-5 w-10 truncate'>{filename}</p>
+          <p className='pr-2 sm:pr-5 text-sm'>
+            {date?.toDate().toLocaleDateString()}
+          </p>
         </a>
       </Link>
 

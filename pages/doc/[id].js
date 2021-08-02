@@ -30,25 +30,29 @@ const Doc = () => {
         <title>{snapshot?.data()?.filename}</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <header className='flex sm:sticky sm:top-0 sm:z-50 justify-center items-center p-3 pb-1 bg-white'>
+      <header className='flex sticky top-0 z-50 justify-center items-center p-3 pb-1 bg-white'>
         <Link href='/'>
-          <a>
-            <span className='cursor-pointer'>
-              <Icon name='description' size='5xl' color='blue' />
-            </span>
+          <a className='cursor-pointer leading-none'>
+            <Icon name='description' size='5xl' color='blue' />
           </a>
         </Link>
 
-        <div className='flex-grow px-2 space-y-1'>
+        <div className='flex-grow px-2'>
           <h2>{snapshot?.data()?.filename}</h2>
-          <div className='flex space-x-1'>
-            <p className='text-gray-500 text-xs italic'>
-              {`Last edited: ${moment(
-                snapshot?.data()?.timestamp?.toDate().getTime()
-              ).format('lll')}`}
-            </p>
-            {snapshot?.data()?.upToDate && (
-              <Icon name='cloud_done' color='gray' />
+          <div>
+            {loadingSnapshot ? (
+              <p className='text-gray-500 text-xs italic'>Loading...</p>
+            ) : (
+              <div className='flex space-x-1'>
+                <p className='text-gray-500 text-xs italic'>
+                  {`Last edited: ${moment(
+                    snapshot?.data()?.timestamp?.toDate().getTime()
+                  ).format('lll')}`}
+                </p>
+                {snapshot?.data()?.upToDate && (
+                  <Icon name='cloud_done' color='gray' />
+                )}
+              </div>
             )}
           </div>
         </div>
