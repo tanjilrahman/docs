@@ -117,8 +117,8 @@ function TextEditor() {
       <Editor
         editorState={editorState}
         onEditorStateChange={onEditorStateChange}
-        toolbarClassName='flex sticky top-[71px] z-50 !justify-center mx-auto'
-        editorClassName='mt-6 p-20 bg-white shadow-lg max-w-5xl mx-auto mb-12 border'
+        toolbarClassName='flex sticky top-0 sm:top-[71px] z-50 !justify-center mx-auto'
+        editorClassName='mt-6 p-10 md:p-20 bg-white shadow-lg max-w-5xl mx-auto mb-12 border'
       />
     </div>
   );

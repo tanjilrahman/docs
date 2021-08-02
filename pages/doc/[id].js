@@ -30,7 +30,7 @@ const Doc = () => {
         <title>{snapshot?.data()?.filename}</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <header className='flex sticky top-0 z-50 justify-center items-center p-3 pb-1 bg-white'>
+      <header className='flex sm:sticky sm:top-0 sm:z-50 justify-center items-center p-3 pb-1 bg-white'>
         <Link href='/'>
           <a>
             <span className='cursor-pointer'>
