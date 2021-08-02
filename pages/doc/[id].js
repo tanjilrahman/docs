@@ -1,12 +1,14 @@
 import Button from '@material-tailwind/react/Button';
 import Icon from '@material-tailwind/react/Icon';
 import moment from 'moment';
+import Link from 'next/link';
 import { getSession, signOut, useSession } from 'next-auth/client';
 import { useRouter } from 'next/dist/client/router';
-import { useDocument, useDocumentOnce } from 'react-firebase-hooks/firestore';
+import { useDocument } from 'react-firebase-hooks/firestore';
 import Login from '../../components/Login';
 import TextEditor from '../../components/TextEditor';
 import { db } from '../../firebase';
+import Head from 'next/head';
 
 const Doc = () => {
   const [session] = useSession();
@@ -24,10 +26,18 @@ const Doc = () => {
 
   return (
     <div>
+      <Head>
+        <title>{snapshot?.data()?.filename}</title>
+        <link rel='icon' href='/favicon.ico' />
+      </Head>
       <header className='flex sticky top-0 z-50 justify-center items-center p-3 pb-1 bg-white'>
-        <span onClick={() => router.push('/')} className='cursor-pointer'>
-          <Icon name='description' size='5xl' color='blue' />
-        </span>
+        <Link href='/'>
+          <a>
+            <span className='cursor-pointer'>
+              <Icon name='description' size='5xl' color='blue' />
+            </span>
+          </a>
+        </Link>
 
         <div className='flex-grow px-2 space-y-1'>
           <h2>{snapshot?.data()?.filename}</h2>

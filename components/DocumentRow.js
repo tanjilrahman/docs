@@ -3,14 +3,13 @@ import Icon from '@material-tailwind/react/Icon';
 import Modal from '@material-tailwind/react/Modal';
 import ModalBody from '@material-tailwind/react/ModalBody';
 import ModalFooter from '@material-tailwind/react/ModalFooter';
+import Link from 'next/link';
 import { useSession } from 'next-auth/client';
-import { useRouter } from 'next/dist/client/router';
 import { useState } from 'react';
 import { db } from '../firebase';
 import firebase from 'firebase';
 
 const DocumentRow = ({ id, filename, date }) => {
-  const router = useRouter();
   const [session] = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const [isLeave, setIsLeave] = useState(false);
@@ -113,14 +112,13 @@ const DocumentRow = ({ id, filename, date }) => {
     >
       {editModal}
       {removeModal}
-      <div
-        onClick={() => router.push(`/doc/${id}`)}
-        className='flex items-center flex-grow'
-      >
-        <Icon name='article' size='3xl' color='blue' />
-        <p className='flex-grow pl-5 w-10 truncate'>{filename}</p>
-        <p className='pr-5 text-sm'>{date?.toDate().toLocaleDateString()}</p>
-      </div>
+      <Link href={`/doc/${id}`}>
+        <a className='flex items-center flex-grow'>
+          <Icon name='article' size='3xl' color='blue' />
+          <p className='flex-grow pl-5 w-10 truncate'>{filename}</p>
+          <p className='pr-5 text-sm'>{date?.toDate().toLocaleDateString()}</p>
+        </a>
+      </Link>
 
       <Button
         color='gray'
